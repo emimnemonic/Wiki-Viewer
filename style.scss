@@ -3,7 +3,9 @@
 $castello: #02401B;
 $cavalcanti: #D8B70A;
 
-$main-font: 400 40px/54px 'Lato', sans-serif;
+$main-font: 300 24px/36px 'Lato', sans-serif;
+
+$border-dec: 1px dashed $cavalcanti;
 
 // mixins
 
@@ -16,12 +18,10 @@ $main-font: 400 40px/54px 'Lato', sans-serif;
 @mixin breakpoint($point) {
     @if point == xlarge {
         @media (min-width: 1281px) {@content;}
-    }
-    @if point == large {
+    } @else if $point == large {
         @media (min-width: 981px) and (max-width:1280px) {@content;}
-    }
-    @if $point == medium {
-        @media (min-width: 768px) and (max-width: 980px) {@content;}
+    } @else if $point == medium {
+        @media (max-width: 980px) {@content;}
     } @else if $point == small {
         @media (max-width: 767px) {@content;}
     } @else if $point == xsmall {
@@ -62,6 +62,8 @@ $main-font: 400 40px/54px 'Lato', sans-serif;
     animation: $spin;
 }
 
+// base
+
 html {
     @include box-sizing(border-box);
     margin: 0;
@@ -79,11 +81,66 @@ body {
     color: $cavalcanti;
     font: $main-font;
 }
-
-i,
+i.lg {
+    font-size: 52px;
+    color: $castello;
+    text-shadow: -1px -1px 0 $cavalcanti, 1px -1px 0 $cavalcanti, -1px 1px 0 $cavalcanti, 1px 1px 0 $cavalcanti;
+}
 a {
     color: $cavalcanti;
 }
 a:hover {
     text-decoration: none;
+}
+
+// main section 
+
+.container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.inner {
+    width: 60%;
+    margin: 0 auto;
+    padding: 8em 0;
+    
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    @include breakpoint(small) {
+        padding: 0;
+        width: 80%;
+    }
+    @include breakpoint(medium) {
+        padding: 4em 0;
+    }
+}
+.item {
+    padding: 2em 4em;
+    text-align: center;
+    flex-grow: 1;
+    flex-basis: 0;
+    @include breakpoint(xsmall) {
+        padding: 1em 2em;
+    }
+    p {
+        margin-top: 2em;
+    }
+}
+#random {
+    border-right: $border-dec;
+    border-top: $border-dec;
+    @include breakpoint(medium) {
+        border-right: none;
+        border-bottom: $border-dec;
+    }
+}
+#search {
+    border-bottom: $border-dec;
 }
