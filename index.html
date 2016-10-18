@@ -13,7 +13,7 @@
 
     <title>Wikipedia Viewer</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-    <script src="https://use.fontawesome.com/a103c73f97.js"></script>
+    <link href="assets/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 
@@ -22,22 +22,28 @@
     <div class="container">
         <div class="inner">
             <div class="item" id="random">
-                <a href="#">
-                    <i class="fa fa-random lg" aria-hidden="true"></i>
-                    <p>Random article coming up</p>
-                </a>
+                <div class="item-content">
+                    <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">
+                        <i class="fa fa-random lg" aria-hidden="true"></i>
+                        <p>Random article coming up</p>
+                    </a>
+                </div>
             </div>
             <div class="item" id="search">
-                <a href="">
-                    <i class="fa fa-search lg" aria-hidden="true"></i>
-                    <p>Click to search Wikipedia</p>
-                </a>
+                <div class="item-content">
+                    <a href="#" id="search-btn">
+                        <i class="fa fa-search lg" aria-hidden="true"></i>
+                        <p>Click to search Wikipedia</p>
+                    </a>
+                    <input type="text" class="hide" id="search-field">
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/assets/jquery-3.1.1.min.js"></script>
+    <script src="app.js"></script>
 
 </body>
 
