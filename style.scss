@@ -1,0 +1,89 @@
+// variables
+
+$castello: #02401B;
+$cavalcanti: #D8B70A;
+
+$main-font: 400 40px/54px 'Lato', sans-serif;
+
+// mixins
+
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+    -moz-box-sizing: $box-model;
+    box-sizing: $box-model;
+}
+
+@mixin breakpoint($point) {
+    @if point == xlarge {
+        @media (min-width: 1281px) {@content;}
+    }
+    @if point == large {
+        @media (min-width: 981px) and (max-width:1280px) {@content;}
+    }
+    @if $point == medium {
+        @media (min-width: 768px) and (max-width: 980px) {@content;}
+    } @else if $point == small {
+        @media (max-width: 767px) {@content;}
+    } @else if $point == xsmall {
+        @media (max-width: 480px) {@content;}
+    }
+}
+    
+@mixin transition($transition...) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -ms-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}
+
+@mixin opacity($level) {
+    -webkit-opacity: $level;
+    -moz-opacity: $level;
+    opacity: $level;
+}
+
+@keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    } to {
+        -webkit-transform: rotate(359deg);
+        -ms-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+} 
+
+@mixin spin-animation($spin...) {
+    -webkit-animation: $spin;
+    -moz-animation: $spin;
+    -ms-animation: $spin;
+    animation: $spin;
+}
+
+html {
+    @include box-sizing(border-box);
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    @include box-sizing(inherit);
+}
+
+body {
+    background-color: $castello;
+    color: $cavalcanti;
+    font: $main-font;
+}
+
+i,
+a {
+    color: $cavalcanti;
+}
+a:hover {
+    text-decoration: none;
+}
