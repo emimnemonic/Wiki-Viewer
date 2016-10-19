@@ -17,9 +17,7 @@ $border-dec: 1px dashed $cavalcanti;
 }
 
 @mixin breakpoint($point) {
-    @if point == xlarge {
-        @media (min-width: 1281px) {@content;}
-    } @else if $point == large {
+    @if $point == large {
         @media (max-width:1280px) {@content;}
     } @else if $point == medium {
         @media (max-width: 980px) {@content;}
@@ -27,6 +25,8 @@ $border-dec: 1px dashed $cavalcanti;
         @media (max-width: 767px) {@content;}
     } @else if $point == xsmall {
         @media (max-width: 480px) {@content;}
+    }  @else if point == xlarge {
+        @media (min-width: 1281px) {@content;}
     }
 }
 
@@ -107,29 +107,30 @@ a {
     margin: 0 auto;
 }
 .inner {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 8em 0;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
-    padding: 8em 6em;
-    justify-content: space-between;
-    @include breakpoint(large) {
-        padding: 8em 2em;
-    }
+    justify-content: center;
     @include breakpoint(medium) {
-        padding: 3em 8em;
+        padding: 4em 0 0;
     }
     @include breakpoint(small) {
-        padding: 1.5em 4em;
+        padding: 3em 0;
     }
     @include breakpoint(xsmall) {
-        padding: 2em 1.5em;
+        padding: 2em 0 0;
+    }
+    @include breakpoint(xlarge) {
+        padding: 12em 0;
     }
 }
 .item {
-    width: 30%;
     text-align: center;
     display: -webkit-box;
     display: -moz-box;
@@ -137,24 +138,20 @@ a {
     display: -webkit-flex;
     display: flex;
     flex: 1;
-    @include breakpoint(large) {
-        width: 100%;
-    }
 }
 .item-content {
     padding: 2em;
     @include breakpoint(medium) {
-        padding: 2em 4em;
+        padding: 2.5em 1.5em;
     }
     @include breakpoint(xsmall) {
-        padding: 1em 2.5em;
+        padding: 2em 4em;
     }
     p {
         margin-top: 2em;
     }
 }
 #random {
-    margin-left: 20%;
     border-right: $border-dec;
     border-top: $border-dec;
     @include breakpoint(medium) {
@@ -164,13 +161,8 @@ a {
         border-right: none;
         border-bottom: $border-dec;
     }
-    @media (min-width:568px) and (max-width:640px) {
-        border-right: none;
-        border-bottom: $border-dec;
-    }
 }
 #search {
-    margin-right: 20%;
     border-bottom: $border-dec;
     @include breakpoint(medium) {
         margin-right: 0;
