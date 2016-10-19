@@ -4,6 +4,7 @@ $castello: #02401B;
 $cavalcanti: #D8B70A;
 
 $main-font: 300 24px/36px 'Lato', sans-serif;
+$reduced-font: 300 20px/28px 'Lato', sans-serif;
 
 $border-dec: 1px dashed $cavalcanti;
 
@@ -19,7 +20,7 @@ $border-dec: 1px dashed $cavalcanti;
     @if point == xlarge {
         @media (min-width: 1281px) {@content;}
     } @else if $point == large {
-        @media (min-width: 981px) and (max-width:1280px) {@content;}
+        @media (max-width:1280px) {@content;}
     } @else if $point == medium {
         @media (max-width: 980px) {@content;}
     } @else if $point == small {
@@ -86,6 +87,9 @@ body {
     background-color: $castello;
     color: $cavalcanti;
     font: $main-font;
+    @include breakpoint(medium) {
+        font: $reduced-font;
+    }
 }
 i.lg {
     font-size: 52px;
@@ -111,6 +115,18 @@ a {
     flex-wrap: wrap;
     padding: 8em 6em;
     justify-content: space-between;
+    @include breakpoint(large) {
+        padding: 8em 2em;
+    }
+    @include breakpoint(medium) {
+        padding: 3em 8em;
+    }
+    @include breakpoint(small) {
+        padding: 1.5em 4em;
+    }
+    @include breakpoint(xsmall) {
+        padding: 2em 1.5em;
+    }
 }
 .item {
     width: 30%;
@@ -121,36 +137,61 @@ a {
     display: -webkit-flex;
     display: flex;
     flex: 1;
-    @include breakpoint(medium) {
-        width: 75%;
-    }
-    @include breakpoint(small) {
+    @include breakpoint(large) {
         width: 100%;
     }
 }
 .item-content {
-    padding: 2em 4em;
+    padding: 2em;
+    @include breakpoint(medium) {
+        padding: 2em 4em;
+    }
+    @include breakpoint(xsmall) {
+        padding: 1em 2.5em;
+    }
     p {
         margin-top: 2em;
     }
 }
 #random {
+    margin-left: 20%;
     border-right: $border-dec;
     border-top: $border-dec;
     @include breakpoint(medium) {
+        margin-left: 0;
+    }
+    @include breakpoint(xsmall) {
+        border-right: none;
+        border-bottom: $border-dec;
+    }
+    @media (min-width:568px) and (max-width:640px) {
         border-right: none;
         border-bottom: $border-dec;
     }
 }
 #search {
+    margin-right: 20%;
     border-bottom: $border-dec;
+    @include breakpoint(medium) {
+        margin-right: 0;
     }
+}
 .hide {
     display: none;
 }
+.search-form {
+    text-align: center;
+}
 input {
+    width: 100%;
     background-color: $castello;
-    padding: 2em 3em;
-    border-color: $cavalcanti;
+    padding: 0.5em 1em;
+    border: 1px solid $cavalcanti;
+    box-shadow: none;
+    font: 300 18px/24px 'Lato', sans-serif;
+    color: $cavalcanti;
     @include border-radius(15px);
+}
+input:focus {
+    outline: none;
 }
