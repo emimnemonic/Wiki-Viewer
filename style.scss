@@ -1,15 +1,12 @@
 // variables
-
 $castello: #02401B;
 $cavalcanti: #D8B70A;
-
-$main-font: 300 24px/36px 'Lato', sans-serif;
-$reduced-font: 300 20px/28px 'Lato', sans-serif;
-
+$main-font: 300 24px/36px 'Lato',
+sans-serif;
+$reduced-font: 300 20px/28px 'Lato',
+sans-serif;
 $border-dec: 1px dashed $cavalcanti;
-
 // mixins
-
 @mixin box-sizing($box-model) {
     -webkit-box-sizing: $box-model;
     -moz-box-sizing: $box-model;
@@ -17,16 +14,30 @@ $border-dec: 1px dashed $cavalcanti;
 }
 
 @mixin breakpoint($point) {
-    @if $point == large {
-        @media (max-width:1280px) {@content;}
-    } @else if $point == medium {
-        @media (max-width: 980px) {@content;}
-    } @else if $point == small {
-        @media (max-width: 767px) {@content;}
-    } @else if $point == xsmall {
-        @media (max-width: 480px) {@content;}
-    }  @else if point == xlarge {
-        @media (min-width: 1281px) {@content;}
+    @if $point==large {
+        @media (max-width: 1280px) {
+            @content;
+        }
+    }
+    @else if $point==medium {
+        @media (max-width: 980px) {
+            @content;
+        }
+    }
+    @else if $point==small {
+        @media (max-width: 767px) {
+            @content;
+        }
+    }
+    @else if $point==xsmall {
+        @media (max-width: 480px) {
+            @content;
+        }
+    }
+    @else if point==xlarge {
+        @media (min-width: 1281px) {
+            @content;
+        }
     }
 }
 
@@ -35,7 +46,7 @@ $border-dec: 1px dashed $cavalcanti;
     -moz-border-radius: $radius;
     border-radius: $radius;
 }
-    
+
 @mixin transition($transition...) {
     -webkit-transition: $transition;
     -moz-transition: $transition;
@@ -51,7 +62,6 @@ $border-dec: 1px dashed $cavalcanti;
 }
 
 // base
-
 html {
     @include box-sizing(border-box);
     margin: 0;
@@ -72,25 +82,27 @@ body {
         font: $reduced-font;
     }
 }
+
 i.lg {
     font-size: 52px;
     color: $castello;
     text-shadow: -1px -1px 0 $cavalcanti, 1px -1px 0 $cavalcanti, -1px 1px 0 $cavalcanti, 1px 1px 0 $cavalcanti;
 }
+
 a {
     color: $cavalcanti;
     text-decoration: none;
 }
 
 // main section 
-
 .container {
     width: 100%;
     height: auto;
     margin: 0 auto;
-    overflow-x: hidden;
+    overflow: hidden;
     @include transition(transform 1s ease-in-out)
 }
+
 .move {
     transform: translateX(-52vw);
     @include breakpoint(small) {
@@ -100,6 +112,7 @@ a {
         transform: translateY(-52vh);
     }
 }
+
 .inner {
     max-width: 600px;
     margin: 0 auto;
@@ -124,6 +137,7 @@ a {
         padding: 12em 0;
     }
 }
+
 .item {
     text-align: center;
     display: -webkit-box;
@@ -133,6 +147,7 @@ a {
     display: flex;
     flex: 1;
 }
+
 .item-content {
     padding: 2em;
     @include breakpoint(medium) {
@@ -145,6 +160,7 @@ a {
         margin-top: 2em;
     }
 }
+
 #random {
     border-right: $border-dec;
     border-top: $border-dec;
@@ -156,18 +172,22 @@ a {
         border-bottom: $border-dec;
     }
 }
+
 #search {
     border-bottom: $border-dec;
     @include breakpoint(medium) {
         margin-right: 0;
     }
 }
+
 .hide {
     display: none;
 }
+
 .search-form {
     text-align: center;
 }
+
 input {
     width: 100%;
     background-color: $castello;
@@ -178,11 +198,17 @@ input {
     color: $cavalcanti;
     @include border-radius(15px);
 }
+
 input:focus {
     outline: none;
 }
+
 .results {
     position: absolute;
     margin-left: 75vw;
     top: 0;
+    @include breakpoint(small) {
+        margin-top: 80vh;
+        margin-left: 0;
+    }
 }

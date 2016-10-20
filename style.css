@@ -33,7 +33,7 @@ a {
   width: 100%;
   height: auto;
   margin: 0 auto;
-  overflow-x: hidden;
+  overflow: hidden;
   -webkit-transition: transform 1s ease-in-out;
   -moz-transition: transform 1s ease-in-out;
   -ms-transition: transform 1s ease-in-out;
@@ -132,5 +132,9 @@ input:focus {
   position: absolute;
   margin-left: 75vw;
   top: 0; }
+  @media (max-width: 767px) {
+    .results {
+      margin-top: 80vh;
+      margin-left: 0; } }
 
 /*# sourceMappingURL=style.css.map */
