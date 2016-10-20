@@ -46,9 +46,35 @@ $(document).ready(function () {
 
     field.keypress(function (e) {
         if (e.which === 13) {
-            $('.container').toggleClass("move");
-            $('.results').toggleClass('hide');
-            back.removeClass("hide");
+            if ($(this).val() !== "") {
+
+                var term = $(this).val();
+
+                $.ajax({
+                    url: "https://en.wikipedia.org/w/api.php?",
+                    data: {
+                        action: 'query',
+                        list: 'search',
+                        srsearch: term,
+                        format: 'json'
+                    },
+                    dataType: 'jsonp',
+                    headers: {
+                        'Api-User-Agent': 'WikiViewer/1.0 (https://github.com/emimnemonic)'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        var results = data.query.search;
+                        console.log(results);
+                        $.each(results, function (i, val) {
+                            $('ul.results-list').append($('<li><strong>'+results[i].title+'</strong><p class="list-content">'+results[i].snippet+'</p></li>'));
+                        });
+                        $('.container').toggleClass("move");
+                        $('.results').toggleClass('hide');
+                        back.removeClass("hide");
+                    }
+                });
+            }
         }
     });
 
