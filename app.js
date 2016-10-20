@@ -5,7 +5,18 @@ $(document).ready(function () {
         field = $('#search-field'),
         type = $('#type-search'),
         close = $('#close'),
-        clear = $('#clear-search');
+        clear = $('#clear-search'),
+        back = $('#back');
+
+    function toSearch(p1, p2) {
+        p1.addClass("hide");
+        p2.removeClass("hide");
+    };
+
+    function stopSearch(p1, p2) {
+        p1.removeClass("hide");
+        p2.addClass("hide");
+    };
 
     searchBtn.click(function () {
         $(this).fadeToggle("slow", "linear", function () {
@@ -16,22 +27,39 @@ $(document).ready(function () {
 
     field.keypress(function () {
         if ($(this).val() !== "") {
-            type.addClass("hide");
-            close.removeClass("hide");
+            toSearch(type, close);
         }
     });
 
     field.keyup(function () {
         if ($(this).val() === "") {
-            close.addClass("hide");
-            type.removeClass("hide");
+            stopSearch(type, close);
         }
     });
 
     clear.click(function () {
         field.val("");
-        close.addClass("hide");
-        type.removeClass("hide");
+        stopSearch(type, close);
         field.focus();
+    });
+
+
+    field.keypress(function (e) {
+        if (e.which === 13) {
+            $('.container').toggleClass("move");
+            $('.results').toggleClass('hide');
+            back.removeClass("hide");
+        }
+    });
+
+    back.click(function () {
+        form.fadeToggle("fast", "linear", function () {
+            searchBtn.fadeToggle("fast", "linear");
+            $('.container').toggleClass("move");
+            $('.results').toggleClass('hide');
+            back.toggleClass("hide");
+            field.val("");
+            stopSearch(type, close);
+        });
     });
 });

@@ -50,25 +50,6 @@ $border-dec: 1px dashed $cavalcanti;
     opacity: $level;
 }
 
-@keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-    } to {
-        -webkit-transform: rotate(359deg);
-        -ms-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-} 
-
-@mixin spin-animation($spin...) {
-    -webkit-animation: $spin;
-    -moz-animation: $spin;
-    -ms-animation: $spin;
-    animation: $spin;
-}
-
 // base
 
 html {
@@ -104,7 +85,20 @@ a {
 // main section 
 
 .container {
+    width: 100%;
+    height: auto;
     margin: 0 auto;
+    overflow-x: hidden;
+    @include transition(transform 1s ease-in-out)
+}
+.move {
+    transform: translateX(-52vw);
+    @include breakpoint(small) {
+        transform: translateY(-40vh);
+    }
+    @media (max-width: 320px) {
+        transform: translateY(-52vh);
+    }
 }
 .inner {
     max-width: 600px;
@@ -147,7 +141,7 @@ a {
     @include breakpoint(xsmall) {
         padding: 2em 4em;
     }
-    p {
+    p:nth-of-type(1) {
         margin-top: 2em;
     }
 }
@@ -186,4 +180,9 @@ input {
 }
 input:focus {
     outline: none;
+}
+.results {
+    position: absolute;
+    margin-left: 75vw;
+    top: 0;
 }
