@@ -4,11 +4,11 @@
 
 This is what it looks like on desktop:
 
-![Screenshot of Wiki Viewer app](../img/screencapt1.png "Main view of app")
+![Screenshot of Wiki Viewer app](img/screencapt1.png "Main view of app")
 
 And here's the search results view:
 
-![Screenshot of Wiki Viewer search results](../img/screencapt2.png "Search results view of app")
+![Screenshot of Wiki Viewer search results](img/screencapt2.png "Search results view of app")
 
 Built for [FCC's front-end project](https://www.freecodecamp.com/challenges/build-a-wikipedia-viewer).The following are the user stories to be fulfilled:
 
