@@ -8,22 +8,30 @@ $(document).ready(function () {
         clear = $('#clear-search'),
         back = $('#back');
 
+    // Hide help text and show search options
     function toSearch(p1, p2) {
         p1.addClass("hide");
         p2.removeClass("hide");
     };
+
+    // Hide search options and show help text
 
     function stopSearch(p1, p2) {
         p1.removeClass("hide");
         p2.addClass("hide");
     };
 
+    // Show search field on button click
+
     searchBtn.click(function () {
         $(this).fadeToggle("slow", "linear", function () {
-            form.fadeToggle("slow", "linear");
+            form.toggleClass("hide");
             field.focus();
+            type.removeClass('hide');
         });
     });
+
+    // Show search options when user inputs text
 
     field.keypress(function () {
         if ($(this).val() !== "") {
@@ -31,31 +39,50 @@ $(document).ready(function () {
         }
     });
 
+    // Clear search options and show help text when user deletes text
+
     field.keyup(function () {
         if ($(this).val() === "") {
             stopSearch(type, close);
         }
     });
 
-    clear.click(function () {
+    // Clear search option
+
+    clear.click(function (e) {
+        e.preventDefault();
         field.val("");
         stopSearch(type, close);
         field.focus();
     });
 
+    // Submitting search queries
 
     field.keypress(function (e) {
+        // When user presses enter
         if (e.which === 13) {
-            if ($(this).val() !== "") {
+            e.preventDefault();
 
-                var term = $(this).val();
+            // And if search field isn't empty
+
+            var term = $(this).val();
+
+            if (term !== "") {
+
+                // Call Wikimedia API
 
                 $.ajax({
                     url: "https://en.wikipedia.org/w/api.php?",
                     data: {
                         action: 'query',
-                        list: 'search',
-                        srsearch: term,
+                        generator: 'search',
+                        gsrsearch: term,
+                        gsrlimit: 10,
+                        prop: 'extracts',
+                        explaintext: true,
+                        exintro: true,
+                        exchars: 320,
+                        exlimit: 10,
                         format: 'json'
                     },
                     dataType: 'jsonp',
@@ -64,14 +91,28 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         console.log(data);
-                        var results = data.query.search;
-                        console.log(results);
+                        var results = data.query.pages,
+                            resultsList = $('ul.results-list'),
+                            url = 'https://en.wikipedia.org/?curid=';
+
+                        // Check if there are previous results and if so remove them
+
+                        while (resultsList.children().length !== 0) {
+                            resultsList.children().remove();
+                        }
+                        // Iterate through array and add information to list
+
                         $.each(results, function (i, val) {
-                            $('ul.results-list').append($('<li><strong>'+results[i].title+'</strong><p class="list-content">'+results[i].snippet+'</p></li>'));
+                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="item"><strong>' + results[i].title + '</strong><br /><p class="list-content">' + results[i].extract + '</p></li></a>'));
                         });
-                        $('.container').toggleClass("move");
-                        $('.results').toggleClass('hide');
-                        back.removeClass("hide");
+
+                        // Slide menu left or up and reveal search results
+
+                        $('.container').addClass("move").delay(1000).queue(function () {
+                            $('.results').removeClass('hide');
+                            back.removeClass("hide");
+                            $(this).dequeue();
+                        });
                     }
                 });
             }
@@ -79,13 +120,14 @@ $(document).ready(function () {
     });
 
     back.click(function () {
-        form.fadeToggle("fast", "linear", function () {
-            searchBtn.fadeToggle("fast", "linear");
-            $('.container').toggleClass("move");
-            $('.results').toggleClass('hide');
-            back.toggleClass("hide");
-            field.val("");
+        $('.results').addClass("hide");
+        $('.container').removeClass("move");
+        back.addClass("hide").queue(function () {
+            form.toggleClass("hide");
             stopSearch(type, close);
+            searchBtn.fadeToggle("fast", "linear");
+            field.val("");
+            $(this).dequeue();
         });
     });
 });
