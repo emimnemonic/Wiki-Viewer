@@ -108,6 +108,7 @@ $(document).ready(function () {
                         // Slide menu left or up and reveal search results
 
                         $('.container').addClass("move").delay(1000).queue(function () {
+                            field.blur();
                             $('.results').removeClass('hide');
                             back.removeClass("hide");
                             $(this).dequeue();
