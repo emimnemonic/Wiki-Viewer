@@ -62,7 +62,7 @@ $(document).ready(function () {
         // When user presses enter
         if (e.which === 13) {
             e.preventDefault();
-
+            field.blur();
             // And if search field isn't empty
 
             var term = $(this).val();
@@ -102,13 +102,12 @@ $(document).ready(function () {
                         // Iterate through array and add information to list
 
                         $.each(results, function (i, val) {
-                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="item"><strong>' + results[i].title + '</strong><br /><p class="list-content">' + results[i].extract + '</p></li></a>'));
+                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="list-item"><p><strong>' + results[i].title + '</strong<p><p>' + results[i].extract + '</p></li></a>'));
                         });
 
                         // Slide menu left or up and reveal search results
 
                         $('.container').addClass("move").delay(1000).queue(function () {
-                            field.blur();
                             $('.results').removeClass('hide');
                             back.removeClass("hide");
                             $(this).dequeue();
