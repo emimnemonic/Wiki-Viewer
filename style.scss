@@ -100,7 +100,7 @@ a {
 // main section 
 .container {
     width: 100%;
-    height: 100vh;
+    height: auto;
     margin: 0 auto;
     @extend .flex;
     flex-wrap: nowrap;
@@ -112,13 +112,13 @@ a {
 .move {
     transform: translateX(-50vw);
     @include breakpoint(small) {
-        transform: translateY(-25vh);
+        transform: translateY(-25%);
     }
     @include breakpoint(xsmall) {
-        transform: translateY(-45vh);
+        transform: translateY(-45%);
     }
     @media (max-width: 320px) {
-        transform: translateY(-50vh);
+        transform: translateY(-50%);
     }
 }
 
@@ -214,11 +214,11 @@ input:focus {
     margin-left: 25vw;
     @include breakpoint(small) {
         width: 100%;
-        margin-top: 60vh;
+        margin-top: 40%;
         margin-left: 0;
     }
     @include breakpoint(xsmall) {
-        margin-top: 45vh;
+        margin-top: 80%;
     }
     * {
         @include transition(all 0.5s ease);

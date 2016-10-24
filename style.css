@@ -39,7 +39,7 @@ a {
 
 .container {
   width: 100%;
-  height: 100vh;
+  height: auto;
   margin: 0 auto;
   flex-wrap: nowrap;
   justify-content: center;
@@ -54,13 +54,13 @@ a {
   transform: translateX(-50vw); }
   @media (max-width: 767px) {
     .move {
-      transform: translateY(-25vh); } }
+      transform: translateY(-25%); } }
   @media (max-width: 480px) {
     .move {
-      transform: translateY(-45vh); } }
+      transform: translateY(-45%); } }
   @media (max-width: 320px) {
     .move {
-      transform: translateY(-50vh); } }
+      transform: translateY(-50%); } }
 
 .inner {
   max-width: 50vw;
@@ -143,11 +143,11 @@ input:focus {
   @media (max-width: 767px) {
     .results {
       width: 100%;
-      margin-top: 60vh;
+      margin-top: 40%;
       margin-left: 0; } }
   @media (max-width: 480px) {
     .results {
-      margin-top: 45vh; } }
+      margin-top: 80%; } }
   .results * {
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;

@@ -90,7 +90,6 @@ $(document).ready(function () {
                         'Api-User-Agent': 'WikiViewer/1.0 (https://github.com/emimnemonic)'
                     },
                     success: function (data) {
-                        console.log(data);
                         var results = data.query.pages,
                             resultsList = $('ul.results-list'),
                             url = 'https://en.wikipedia.org/?curid=';
