@@ -102,7 +102,7 @@ $(document).ready(function () {
                         // Iterate through array and add information to list
 
                         $.each(results, function (i, val) {
-                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="list-item"><p><strong>' + results[i].title + '</strong<p><p>' + results[i].extract + '</p></li></a>'));
+                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="list-item"><p><strong>' + results[i].title + '</strong></p><p>' + results[i].extract + '</p></li></a>'));
                         });
 
                         // Slide menu left or up and reveal search results
