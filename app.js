@@ -4,55 +4,84 @@ $(document).ready(function () {
         form = $('#search-form'),
         field = $('#search-field'),
         type = $('#type-search'),
-        close = $('#close'),
-        clear = $('#clear-search'),
-        back = $('#back');
+        clear = $('#clear-text'),
+        clearBtn = $('#clear-btn'),
+        back = $('#back'),
+        container = $('.container'),
+        resultsList = $('ul.results-list'),
+        // Search methods
+        search = {
+            toggleText: function (toHide, toShow) {
+                toHide.addClass("hide");
+                toShow.removeClass("hide");
+            },
+            open: function () {
+                form.toggleClass("hide");
+                field.focus();
+                type.removeClass("hide");
+            },
+            close: function () {
+                form.toggleClass("hide");
+                field.blur();
+                field.val("");
+                type.addClass("hide");
+                clear.addClass("hide");
+            },
+            checkPos: function (el) {
+                return el.hasClass('move');
+            },
+            checkStatus: function (toCheck) {
+                return toCheck.hasClass("hide");
+            },
+            showOptions: function (value) {
+                if (value !== "") {
+                    search.toggleText(type, clear);
+                }
+            },
+            hideOptions: function (value) {
+                if (value === "") {
+                    search.toggleText(clear, type);
+                }
+            }
+        };
+    // Show and hide search field on button click
 
-    // Hide help text and show search options
-    function toSearch(p1, p2) {
-        p1.addClass("hide");
-        p2.removeClass("hide");
-    };
+    searchBtn.click(function (e) {
+        e.preventDefault();
 
-    // Hide search options and show help text
+        $(this).fadeOut("slow", function () {
+            search.open();
 
-    function stopSearch(p1, p2) {
-        p1.removeClass("hide");
-        p2.addClass("hide");
-    };
+            $(document).on('click', function (e) {
+                if (!search.checkStatus(form) && !search.checkPos($('#wrap')) && e.target.id !== 'search-field') {
+                    search.close();
+                    searchBtn.fadeIn("slow");
+                };
+            });
 
-    // Show search field on button click
-
-    searchBtn.click(function () {
-        $(this).fadeToggle("slow", "linear", function () {
-            form.toggleClass("hide");
-            field.focus();
-            type.removeClass('hide');
         });
     });
 
     // Show search options when user inputs text
 
-    field.keypress(function () {
-        if ($(this).val() !== "") {
-            toSearch(type, close);
-        }
+    field.keypress(function (value) {
+        value = $(this).val();
+        search.showOptions();
     });
 
     // Clear search options and show help text when user deletes text
 
-    field.keyup(function () {
-        if ($(this).val() === "") {
-            stopSearch(type, close);
-        }
+    field.keyup(function (value) {
+        value = $(this).val();
+        search.hideOptions();
     });
 
     // Clear search option
 
-    clear.click(function (e) {
+    clearBtn.click(function (e) {
         e.preventDefault();
         field.val("");
-        stopSearch(type, close);
+        search.toggleText(clear, type);
         field.focus();
     });
 
@@ -91,7 +120,6 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         var results = data.query.pages,
-                            resultsList = $('ul.results-list'),
                             url = 'https://en.wikipedia.org/?curid=';
 
                         // Check if there are previous results and if so remove them
@@ -107,7 +135,19 @@ $(document).ready(function () {
 
                         // Slide menu left or up and reveal search results
 
-                        $('.container').addClass("move").delay(1000).queue(function () {
+                        container.addClass("move").delay(1000).queue(function () {
+                            $('.results').removeClass('hide');
+                            back.removeClass("hide");
+                            $(this).dequeue();
+                        });
+                    },
+
+                    // Handle errors
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        resultsList.append("<li class='list-item'><p>Oops! Something went wrong... Please try again later.</p></li>");
+
+                        container.addClass('move').delay(1000).queue(function () {
                             $('.results').removeClass('hide');
                             back.removeClass("hide");
                             $(this).dequeue();
@@ -120,10 +160,10 @@ $(document).ready(function () {
 
     back.click(function () {
         $('.results').addClass("hide");
-        $('.container').removeClass("move");
+        container.removeClass("move");
         back.addClass("hide").queue(function () {
             form.toggleClass("hide");
-            stopSearch(type, close);
+            search.toggleText(clear, type);
             searchBtn.fadeToggle("fast", "linear");
             field.val("");
             $(this).dequeue();
