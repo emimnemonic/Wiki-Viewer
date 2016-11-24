@@ -84,7 +84,6 @@ $(document).ready(function () {
         search.toggleText(clear, type);
         field.focus();
     });
-
     // Submitting search queries
 
     field.keypress(function (e) {
@@ -97,9 +96,6 @@ $(document).ready(function () {
             var term = $(this).val();
 
             if (term !== "") {
-
-                // Call Wikimedia API
-
                 $.ajax({
                     url: "https://en.wikipedia.org/w/api.php?",
                     data: {
@@ -115,44 +111,37 @@ $(document).ready(function () {
                         format: 'json'
                     },
                     dataType: 'jsonp',
+                    timeout: 5000,
                     headers: {
                         'Api-User-Agent': 'WikiViewer/1.0 (https://github.com/emimnemonic)'
-                    },
-                    success: function (data) {
-                        var results = data.query.pages,
-                            url = 'https://en.wikipedia.org/?curid=';
-
-                        // Check if there are previous results and if so remove them
-
-                        while (resultsList.children().length !== 0) {
-                            resultsList.children().remove();
-                        }
-                        // Iterate through array and add information to list
-
-                        $.each(results, function (i, val) {
-                            resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="list-item"><p><strong>' + results[i].title + '</strong></p><p>' + results[i].extract + '</p></li></a>'));
-                        });
-
-                        // Slide menu left or up and reveal search results
-
-                        container.addClass("move").delay(1000).queue(function () {
-                            $('.results').removeClass('hide');
-                            back.removeClass("hide");
-                            $(this).dequeue();
-                        });
-                    },
-
-                    // Handle errors
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        resultsList.append("<li class='list-item'><p>Oops! Something went wrong... Please try again later.</p></li>");
-
-                        container.addClass('move').delay(1000).queue(function () {
-                            $('.results').removeClass('hide');
-                            back.removeClass("hide");
-                            $(this).dequeue();
-                        });
                     }
+                })
+                .then(function (data) {
+                    var results = data.query.pages;
+                    // Removes previous results if any
+                    while (resultsList.children().length !== 0) {
+                        resultsList.children().remove();
+                    }
+                    // Base URL for articles link
+                    var url = 'https://en.wikipedia.org/?curid=';
+                    // Loop through results and append items to the list
+                    $.each(results, function (i, val) {
+                        resultsList.append($('<a href="' + url + results[i].pageid + '" target="_blank"><li class="list-item"><p><strong>' + results[i].title + '</strong></p><p>' + results[i].extract + '</p></li></a>'));
+                    });
+                })
+                // Handle error
+                .catch(function (err) {
+                    console.log(err);
+                    resultsList.children().remove();
+                    resultsList.append("<li class='list-item'><p>Oops! Something went wrong... Please try again later.</p></li>");
+                })
+                // Move container no matter what
+                .always(function () {
+                    container.addClass("move").delay(1000).queue(function () {
+                        $('.results').removeClass('hide');
+                        back.removeClass("hide");
+                        $(this).dequeue();
+                    });
                 });
             }
         }
